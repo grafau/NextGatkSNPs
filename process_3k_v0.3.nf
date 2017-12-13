@@ -57,7 +57,7 @@ process bwa {
 
 	 SID = "${RAW.SID}"
 	 ID = "${RAW.RID}"
-         RG = "\'@RG\\tID:${RAW.P1}\\tSM:${RAW.SID}\\tPL:ILLUMINA\'"
+         RG = "\'@RG\\tID:${RAW.RID}\\tSM:${RAW.SID}\\tPL:ILLUMINA\'"
          MAP = "${RAW.RID}.sam"
 
          P1 = file("${RAW.P1}")
