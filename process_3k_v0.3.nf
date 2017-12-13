@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 // ######################################
-// #                                    #
+// #    Rafal Gutaker, NYU, 2017        #
 // #    Pipeline that performs:         #
 // #    - mapping to reference          #
 // #    - sorting reads		        #
