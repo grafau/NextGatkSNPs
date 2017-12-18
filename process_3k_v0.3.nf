@@ -44,7 +44,7 @@ process bwa {
         executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-        	clusterOptions = " --cpus-per-task=${params.bwa_cpu} --time=${params.bwa_rt} --mem=${params.bwa_vmem}"
+        	clusterOptions = " --cpus-per-task=${params.bwa_cpu} --time=${params.bwa_rt} --mem-per-cpu=${params.bwa_vmem}"
 	}
 
         input:
@@ -77,7 +77,7 @@ process sort {
         executor = "${params.exe}"
         if ("${params.exe}" == "slurm")
         {
-        	clusterOptions = "--cpus-per-task=${params.srt_cpu} --time=${params.srt_rt} --mem=${params.srt_vmem}"
+        	clusterOptions = "--cpus-per-task=${params.srt_cpu} --time=${params.srt_rt} --mem-per-cpu=${params.srt_vmem}"
 	}
 
         input:
@@ -113,7 +113,7 @@ process rmdup {
         executor = "${params.exe}"
         if ("${params.exe}" == "slurm")
         {
-		clusterOptions = "--cpus-per-task=${params.ddp_cpu} --time=${params.ddp_rt} --mem=${params.ddp_vmem}"
+		clusterOptions = "--cpus-per-task=${params.ddp_cpu} --time=${params.ddp_rt} --mem-per-cpu=${params.ddp_vmem}"
 	}
 
         input:
@@ -144,7 +144,7 @@ process checkbam {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--cpus-per-task=${params.vb_cpu} --time=${params.vb_rt} --mem=${params.vb_vmem}"
+		clusterOptions = "--cpus-per-task=${params.vb_cpu} --time=${params.vb_rt} --mem-per-cpu=${params.vb_vmem}"
 	}
 
 
@@ -169,7 +169,7 @@ process index {
         executor = "${params.exe}"
         if ("${params.exe}" == "slurm")
         {
-	        clusterOptions = "--cpus-per-task=${params.idx_cpu} --time=${params.idx_rt} --mem=${params.idx_vmem}"
+	        clusterOptions = "--cpus-per-task=${params.idx_cpu} --time=${params.idx_rt} --mem-per-cpu=${params.idx_vmem}"
 	}
 
 
@@ -198,7 +198,7 @@ process haplocall {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--cpus-per-task=${params.hc_cpu} --time=${params.hc_rt} --mem=${params.hc_vmem}"
+		clusterOptions = "--cpus-per-task=${params.hc_cpu} --time=${params.hc_rt} --mem-per-cpu=${params.hc_vmem}"
 	}
 
  	input:
@@ -226,7 +226,7 @@ process checkvcf {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--cpus-per-task=${params.vv_cpu} --time=${params.vv_rt} --mem=${params.vv_vmem}"
+		clusterOptions = "--cpus-per-task=${params.vv_cpu} --time=${params.vv_rt} --mem-per-cpu=${params.vv_vmem}"
 	}
 
 	input:
@@ -264,7 +264,7 @@ process combine {
  	executor = "${params.exe}"
  	if ("${params.exe}" == "slurm")
  	{
- 		clusterOptions = "--cpus-per-task=${params.cg_cpu} --time=${params.cg_rt} --mem=${params.cg_vmem}"
+ 		clusterOptions = "--cpus-per-task=${params.cg_cpu} --time=${params.cg_rt} --mem-per-cpu=${params.cg_vmem}"
  	}
 
 	input:
@@ -297,7 +297,7 @@ process compress {
 	executor = "${params.exe}" 	
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--cpus-per-task=${params.bg_cpu} --time=${params.bg_rt} --mem=${params.bg_vmem}"
+		clusterOptions = "--cpus-per-task=${params.bg_cpu} --time=${params.bg_rt} --mem-per-cpu=${params.bg_vmem}"
 	}
 
         input:
@@ -336,7 +336,7 @@ process tabix {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--cpus-per-task=${params.tx_cpu} --time=${params.tx_rt} --mem=${params.tx_vmem}"
+		clusterOptions = "--cpus-per-task=${params.tx_cpu} --time=${params.tx_rt} --mem-per-cpu=${params.tx_vmem}"
 	}
 
         input:
