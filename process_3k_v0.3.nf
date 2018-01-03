@@ -36,6 +36,7 @@ REF = file("${params.ref}")
 // Create Input Channel
 SampleData = Channel.fromPath("${DAT}").splitCsv(header: ['SID','RID','P1','P2'], skip: 0, by:1, sep:",")
 
+
 // ########### Run BWA #############
 process bwa {
 
@@ -46,7 +47,6 @@ process bwa {
         executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		queueSize = 1500
         	clusterOptions = "--qos=cpuplus --cpus-per-task=${params.bwa_cpu} --time=${params.bwa_rt} --mem=${params.bwa_vmem}"
 	}
 
@@ -82,7 +82,6 @@ process sort {
         executor = "${params.exe}"
         if ("${params.exe}" == "slurm")
         {
-		queueSize = 1500
         	clusterOptions = "--qos=cpuplus --cpus-per-task=${params.srt_cpu} --time=${params.srt_rt} --mem=${params.srt_vmem}"
 	}
 
@@ -121,7 +120,6 @@ process rmdup {
         executor = "${params.exe}"
         if ("${params.exe}" == "slurm")
         {
-		queueSize = 200
 		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.ddp_cpu} --time=${params.ddp_rt} --mem=${params.ddp_vmem}"
 	}
 
@@ -153,7 +151,6 @@ process checkbam {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		queueSize = 200
 		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.vb_cpu} --time=${params.vb_rt} --mem=${params.vb_vmem}"
 	}
 
@@ -181,7 +178,6 @@ process index {
         executor = "${params.exe}"
         if ("${params.exe}" == "slurm")
         {
-		queueSize = 200
 	        clusterOptions = "--qos=cpuplus --cpus-per-task=${params.idx_cpu} --time=${params.idx_rt} --mem=${params.idx_vmem}"
 	}
 
@@ -213,7 +209,6 @@ process haplocall {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		queueSize = 200
 		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.hc_cpu} --time=${params.hc_rt} --mem=${params.hc_vmem}"
 	}
 
@@ -242,7 +237,6 @@ process checkvcf {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		queueSize = 200
 		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.vv_cpu} --time=${params.vv_rt} --mem=${params.vv_vmem}"
 	}
 
@@ -316,7 +310,6 @@ process compress {
 	executor = "${params.exe}" 	
 	if ("${params.exe}" == "slurm")
 	{
-		queueSize = 200
 		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.bg_cpu} --time=${params.bg_rt} --mem=${params.bg_vmem}"
 	}
 
@@ -358,7 +351,6 @@ process tabix {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		queueSize = 200
 		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.tx_cpu} --time=${params.tx_rt} --mem=${params.tx_vmem}"
 	}
 
