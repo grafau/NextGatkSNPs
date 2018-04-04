@@ -14,6 +14,7 @@
 
 params.help=""
 params.exe="local"
+params.qos=""
 
 if (params.help) {
         log.info " "
@@ -25,6 +26,7 @@ if (params.help) {
         log.info "--ref\t[STRING]\tPath to the indexed referece fasta file [OBLIGATORY]"
         log.info "--list\t[STRING]\tPath to the file with run IDs and fastq files to be processed [OBLIGATORY]"
         log.info "--exe\t[STRING]\tExecutor mode, -local- or -slurm- [DEFUALT: local]"
+	log.info "--qos\t[STRING]\tSecret QoS for cpuplus [DEFAULT: none]"
         log.info " "
         exit 1
 }
@@ -32,6 +34,7 @@ if (params.help) {
 // Initalize Input
 DAT = file("${params.list}")
 REF = file("${params.ref}")
+QOS = "${params.qos}"
 
 // Create Input Channel
 SampleData = Channel.fromPath("${DAT}").splitCsv(header: ['SID','RID','P1','P2'], skip: 0, by:1, sep:",")
@@ -47,7 +50,11 @@ process bwa {
         executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-        	clusterOptions = "--qos=cpuplus --cpus-per-task=${params.bwa_cpu} --time=${params.bwa_rt} --mem=${params.bwa_vmem}"
+        	clusterOptions = " --cpus-per-task=${params.bwa_cpu} --time=${params.bwa_rt} --mem=${params.bwa_vmem}"
+	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
 	}
 
         input:
@@ -82,7 +89,11 @@ process sort {
         executor = "${params.exe}"
         if ("${params.exe}" == "slurm")
         {
-        	clusterOptions = "--qos=cpuplus --cpus-per-task=${params.srt_cpu} --time=${params.srt_rt} --mem=${params.srt_vmem}"
+        	clusterOptions = " --cpus-per-task=${params.srt_cpu} --time=${params.srt_rt} --mem=${params.srt_vmem}"
+	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
 	}
 
         input:
@@ -120,7 +131,11 @@ process rmdup {
         executor = "${params.exe}"
         if ("${params.exe}" == "slurm")
         {
-		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.ddp_cpu} --time=${params.ddp_rt} --mem=${params.ddp_vmem}"
+		clusterOptions = " --cpus-per-task=${params.ddp_cpu} --time=${params.ddp_rt} --mem=${params.ddp_vmem}"
+	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
 	}
 
         input:
@@ -151,7 +166,11 @@ process checkbam {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.vb_cpu} --time=${params.vb_rt} --mem=${params.vb_vmem}"
+		clusterOptions = " --cpus-per-task=${params.vb_cpu} --time=${params.vb_rt} --mem=${params.vb_vmem}"
+	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
 	}
 
 
@@ -178,7 +197,11 @@ process index {
         executor = "${params.exe}"
         if ("${params.exe}" == "slurm")
         {
-	        clusterOptions = "--qos=cpuplus --cpus-per-task=${params.idx_cpu} --time=${params.idx_rt} --mem=${params.idx_vmem}"
+	        clusterOptions = " --cpus-per-task=${params.idx_cpu} --time=${params.idx_rt} --mem=${params.idx_vmem}"
+	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
 	}
 
 
@@ -209,7 +232,11 @@ process haplocall {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.hc_cpu} --time=${params.hc_rt} --mem=${params.hc_vmem}"
+		clusterOptions = " --cpus-per-task=${params.hc_cpu} --time=${params.hc_rt} --mem=${params.hc_vmem}"
+	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
 	}
 
  	input:
@@ -237,7 +264,11 @@ process checkvcf {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.vv_cpu} --time=${params.vv_rt} --mem=${params.vv_vmem}"
+		clusterOptions = " --cpus-per-task=${params.vv_cpu} --time=${params.vv_rt} --mem=${params.vv_vmem}"
+	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
 	}
 
 	input:
@@ -275,8 +306,12 @@ process combine {
  	executor = "${params.exe}"
  	if ("${params.exe}" == "slurm")
  	{
- 		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.cg_cpu} --time=${params.cg_rt} --mem=${params.cg_vmem}"
+ 		clusterOptions = " --cpus-per-task=${params.cg_cpu} --time=${params.cg_rt} --mem=${params.cg_vmem}"
  	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
+	}
 
 	input:
 	file(CALL) from listed
@@ -310,7 +345,11 @@ process compress {
 	executor = "${params.exe}" 	
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.bg_cpu} --time=${params.bg_rt} --mem=${params.bg_vmem}"
+		clusterOptions = " --cpus-per-task=${params.bg_cpu} --time=${params.bg_rt} --mem=${params.bg_vmem}"
+	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
 	}
 
         input:
@@ -351,7 +390,11 @@ process tabix {
 	executor = "${params.exe}"
 	if ("${params.exe}" == "slurm")
 	{
-		clusterOptions = "--qos=cpuplus --cpus-per-task=${params.tx_cpu} --time=${params.tx_rt} --mem=${params.tx_vmem}"
+		clusterOptions = " --cpus-per-task=${params.tx_cpu} --time=${params.tx_rt} --mem=${params.tx_vmem}"
+	}
+	if ("${params.qos}" == "cpuplus")
+	{
+		clusterOptions = "--qos ${QOS}"
 	}
 
         input:
