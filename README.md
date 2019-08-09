@@ -57,3 +57,4 @@ If all files are present, you can run this pipeline as follows:
 
 nextflow run -c call.conf call.nf --ref ref.fa --list chrom.txt
 
+
