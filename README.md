@@ -37,7 +37,9 @@ Batch files format is as follows:
 
 If all files are present, you can run this pipeline as follows:
 
+```
 nextflow run -c process_3k_v0.3.conf process_3k_v0.3.nf --ref ref.fa --list batch.csv
+```
 
 ## CALL SNPS
 
@@ -61,6 +63,7 @@ Chrom files format is as follows:
 
 If all files are present, you can run this pipeline as follows:
 
+```
 nextflow run -c call.conf call.nf --ref ref.fa --list chrom.txt
-
+```
 
